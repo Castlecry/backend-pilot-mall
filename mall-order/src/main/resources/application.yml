@@ -1,0 +1,47 @@
+server:
+  port: 8082
+
+spring:
+  application:
+    name: mall-order  # 微服务在 Nacos 中显示的名字
+  datasource:
+    url: jdbc:mysql://localhost:3306/pilot_mall?serverTimezone=Asia/Shanghai
+    username: root
+    password: 123456
+  data:
+    redis:
+      host: localhost
+      port: 6379
+      database: 0
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: guest
+    password: guest
+    deserialization:
+      trust-all: true
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 127.0.0.1:8848 # Nacos 地址
+        ip: 127.0.0.1 # 指定注册到 Nacos 的 IP 地址
+
+# RabbitMQ 队列配置
+rabbitmq:
+  queue:
+    order: order.queue
+
+# AI 配置
+langchain4j:
+  ollama:
+    chat-model:
+      base-url: http://localhost:11434
+      model-name: gpt-oss:20b # or deepseek-r1:8b
+      log-requests: true
+      log-responses: true
+
+# MyBatis 配置
+mybatis:
+  mapper-locations: classpath:mapper/*.xml
+  configuration:
+    map-underscore-to-camel-case: true

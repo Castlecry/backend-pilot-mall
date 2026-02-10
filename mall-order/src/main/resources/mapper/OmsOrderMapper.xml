@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pilot.order.mapper.OmsOrderMapper">
+    <resultMap id="BaseResultMap" type="com.pilot.order.domain.OmsOrder">
+        <id column="id" property="id" jdbcType="BIGINT"/>
+        <result column="order_sn" property="orderSn" jdbcType="VARCHAR"/>
+        <result column="user_id" property="userId" jdbcType="BIGINT"/>
+        <result column="product_id" property="productId" jdbcType="BIGINT"/>
+        <result column="total_amount" property="totalAmount" jdbcType="DECIMAL"/>
+        <result column="status" property="status" jdbcType="INTEGER"/>
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <insert id="insert" parameterType="com.pilot.order.domain.OmsOrder" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO oms_order (order_sn, user_id, product_id, total_amount, status, create_time)
+        VALUES (#{orderSn}, #{userId}, #{productId}, #{totalAmount}, #{status}, #{createTime})
+    </insert>
+
+    <select id="selectByOrderSn" resultMap="BaseResultMap">
+        SELECT id, order_sn, user_id, product_id, total_amount, status, create_time
+        FROM oms_order
+        WHERE order_sn = #{orderSn}
+    </select>
+
+    <select id="selectByUserId" resultMap="BaseResultMap">
+        SELECT id, order_sn, user_id, product_id, total_amount, status, create_time
+        FROM oms_order
+        WHERE user_id = #{userId}
+        ORDER BY create_time DESC
+    </select>
+</mapper>

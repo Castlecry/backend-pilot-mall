@@ -1,0 +1,43 @@
+server:
+  port: 8084
+
+spring:
+  application:
+    name: mall-gateway
+  main:
+    web-application-type: reactive
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 127.0.0.1:8848
+    gateway:
+      discovery:
+        locator:
+          enabled: true
+          lower-case-service-id: true
+      globalcors:
+        corsConfigurations:
+          - id: cors-config
+            allowedOrigins: "*"
+            allowedMethods:
+              - GET
+              - POST
+              - PUT
+              - DELETE
+              - OPTIONS
+            allowedHeaders: "*"
+            allowCredentials: true
+            maxAge: 3600
+      routes:
+        - id: mall-user
+          uri: lb://mall-user
+          predicates:
+            - Path=/api/user/**
+          filters:
+            - StripPrefix=1
+        - id: mall-order
+          uri: lb://mall-order
+          predicates:
+            - Path=/api/order/**,/api/ai/**,/api/product/**
+          filters:
+            - StripPrefix=1
