@@ -1,6 +1,7 @@
 package com.pilot.order.controller;
 
 import com.pilot.common.api.CommonResult;
+import com.pilot.order.annotation.RateLimit;
 import com.pilot.order.dto.OrderCreateParam;
 import com.pilot.order.dto.OrderListResult;
 import com.pilot.order.dto.OrderResult;
@@ -23,6 +24,7 @@ public class OrderController {
     private OrderService orderService;
 
     @PostMapping("/create")
+    @RateLimit(limit = 5, timeout = 60)
     public CommonResult<OrderResult> createOrder(@RequestBody OrderCreateParam param,
                                                    @RequestHeader("X-User-Id") Long userId) {
         OrderResult result = orderService.createOrder(param, userId);
