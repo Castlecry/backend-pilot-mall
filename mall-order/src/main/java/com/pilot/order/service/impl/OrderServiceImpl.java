@@ -82,6 +82,7 @@ public class OrderServiceImpl implements OrderService {
         }
 
         // 剩下的情况就是成功了，继续业务逻辑
+        //数据库查询防止秒杀不存在商品确保一致性
         PmsProduct product = productMapper.selectById(productId);
         if (product == null) {
             log.warn("用户{}秒杀商品{}不存在", userId, productId);
@@ -129,6 +130,7 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public boolean checkRepeatOrder(Long userId, Long productId) {
         String key = "seckill:order:unique:" + userId + ":" + productId;
+        // setIfAbsent = SET NX EX：原子性设置Key，5分钟过期
         Boolean flag = redisTemplate.opsForValue().setIfAbsent(key, "1", 5, TimeUnit.MINUTES);
         // flag 也有可能为 null (网络抖动等)，这种写法是安全的
         return Boolean.TRUE.equals(flag);

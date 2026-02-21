@@ -28,13 +28,12 @@ public class CommonResult<T> {
 
     /**
      * 失败返回结果
-     * @param message 自定义提示信息
+     * @param message 可自定义提示信息
      */
     public static <T> CommonResult<T> failed(String message) {
         return new CommonResult<>(ResultCode.FAILED.getCode(), message, null);
     }
 
-    // --- 重点：你需要手动加上下面这个方法 ---
     /**
      * 失败返回结果
      * @param code 错误码

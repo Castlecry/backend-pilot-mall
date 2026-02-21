@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/order/ai")
+@RequestMapping("/order/ai")//demo 实际未使用
 public class OrderAiController {
 
     private final ChatLanguageModel chatModel;

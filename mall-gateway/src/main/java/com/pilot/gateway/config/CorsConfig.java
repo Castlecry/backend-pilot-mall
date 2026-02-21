@@ -22,6 +22,6 @@ public class CorsConfig {
 
         source.registerCorsConfiguration("/**", config);
 
-        return new CorsWebFilter(source);
+        return new CorsWebFilter(source);//专门用于 WebFlux（Gateway）架构
     }
 }
